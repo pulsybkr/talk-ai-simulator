@@ -25,6 +25,7 @@ async def websocket_endpoint(websocket: WebSocket, interview_id: int, db: Sessio
         # Initialiser le contexte général
         initial_context = openai_service.create_initial_context(interview_context)
         general_info = openai_service.get_chat_response(initial_context)
+        print(general_info)
 
         # Envoyer les informations générales au client
         await websocket.send_json({
@@ -35,6 +36,7 @@ async def websocket_endpoint(websocket: WebSocket, interview_id: int, db: Sessio
         # Créer le prompt initial pour commencer l'entretien
         initial_prompt = openai_service.create_initial_prompt(interview_context, general_info)
         ai_response = openai_service.get_chat_response(initial_prompt)
+        print(ai_response)
 
         # Envoyer la première question de l'IA
         audio_data = audio_service.text_to_speech(ai_response)
